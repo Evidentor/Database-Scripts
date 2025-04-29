@@ -3,3 +3,4 @@ driver: org.postgresql.Driver
 url: jdbc:postgresql://localhost:5432/evidentor
 username: postgres
 password: postgres
+force: true

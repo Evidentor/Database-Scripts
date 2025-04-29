@@ -1,34 +1,34 @@
 -- liquibase formatted sql
 
--- changeset liquibase:1
+-- changeset evidentor:00
 CREATE TABLE auth_users
 (
-    user_id  INTEGER PRIMARY KEY,
-    email    VARCHAR[255] UNIQUE NOT NULL,
-    password VARCHAR[255]        NOT NULL,
+    user_id  SERIAL PRIMARY KEY,
+    email    TEXT UNIQUE NOT NULL,
+    password TEXT        NOT NULL,
     deleted  BOOLEAN             NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE users
 (
-    id         INTEGER PRIMARY KEY,
-    first_name VARCHAR[255] NOT NULL,
-    last_name  VARCHAR[255] NOT NULL,
+    id         SERIAL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name  TEXT NOT NULL,
     card_id    VARCHAR[15]  NOT NULL,
     deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE buildings
 (
-    id      INTEGER PRIMARY KEY,
-    name    VARCHAR UNIQUE NOT NULL,
-    image   VARCHAR,
+    id      SERIAL PRIMARY KEY,
+    name    TEXT UNIQUE NOT NULL,
+    image   TEXT,
     deleted BOOLEAN        NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE floors
 (
-    id          INTEGER PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
     building_id INTEGER NOT NULL,
     index       INTEGER NOT NULL,
     deleted     BOOLEAN NOT NULL DEFAULT FALSE
@@ -36,26 +36,26 @@ CREATE TABLE floors
 
 CREATE TABLE rooms
 (
-    id       INTEGER PRIMARY KEY,
+    id       BIGSERIAL PRIMARY KEY,
     floor_id INTEGER      NOT NULL,
-    name     VARCHAR[255] NOT NULL,
+    name     TEXT NOT NULL,
     deleted  BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE room_visualizations
 (
-    room_id   INTEGER PRIMARY KEY,
-    start_row INTEGER NOT NULL,
-    start_col INTEGER NOT NULL,
-    rowspan   INTEGER NOT NULL,
-    colspan   INTEGER NOT NULL,
+    room_id   BIGINT PRIMARY KEY,
+    start_row SMALLINT NOT NULL,
+    start_col SMALLINT NOT NULL,
+    rowspan   SMALLINT NOT NULL,
+    colspan   SMALLINT NOT NULL,
     deleted   BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE devices
 (
-    id                INTEGER PRIMARY KEY,
-    room_id           INTEGER   NOT NULL,
+    id                SERIAL PRIMARY KEY,
+    room_id           BIGINT   NOT NULL,
     installation_date TIMESTAMP NOT NULL,
     deleted           BOOLEAN   NOT NULL DEFAULT FALSE
 );
@@ -64,7 +64,7 @@ CREATE TABLE telemetry
 (
     user_id   INTEGER   NOT NULL,
     device_id INTEGER   NOT NULL,
-    room_id   INTEGER   NOT NULL,
+    room_id   BIGINT   NOT NULL,
     scan_time TIMESTAMP NOT NULL,
     deleted   BOOLEAN   NOT NULL DEFAULT FALSE,
     PRIMARY KEY (user_id, device_id, room_id, scan_time)
