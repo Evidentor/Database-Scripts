@@ -14,6 +14,25 @@
         <postgresql.version>42.7.5</postgresql.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <liquibase.propertyFile>src/main/resources/liquibase.yaml</liquibase.propertyFile>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <liquibase.propertyFile>src/main/resources/liquibase-test.yaml</liquibase.propertyFile>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
@@ -21,7 +40,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>${liquibase-maven-plugin.version}</version>
                 <configuration>
-                    <propertyFile>src/main/resources/liquibase.yaml</propertyFile>
+                    <propertyFile>${liquibase.propertyFile}</propertyFile>
                 </configuration>
                 <dependencies>
                     <dependency>

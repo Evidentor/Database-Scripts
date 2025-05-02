@@ -1,0 +1,6 @@
+changeLogFile: src/main/resources/changelog.sql
+driver: org.postgresql.Driver
+url: jdbc:postgresql://localhost:9876/evidentor
+username: postgres
+password: postgres
+force: true
